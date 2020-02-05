@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>vmos virtual machine</title>
+  <link rel="icon" href="icon/android.png" type="image/png" sizes="32x32">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=devanagari,latin-ext'>
+  <link rel="stylesheet" href="./style.css"> 
+<style>
+
+body{
+    font-family: 'Poppins', sans-serif;
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: 400;
+	color: #212112;
+	background-size:7%;
+	background-color: white !important;
+	overflow-x: hidden;
+	transition: all 200ms linear;
+
+}
+::selection {
+	color: #fff;
+	background-color: #ff4242;
+}
+::-moz-selection {
+	color: #fff;
+	background-color: #ff4242;
+}
+.start-header {
+	opacity: 1;
+	transform: translateY(0);
+	padding: 10px 0;
+	box-shadow: 0 10px 30px 0 rgb(33,33,33,0.15);
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.start-header.scroll-on {
+	box-shadow: 0 5px 10px 0 rgb(33,33,33,0.15);
+	padding: 5px 0;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.start-header.scroll-on .navbar-brand img{
+	height: 28px;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navigation-wrap{
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navbar{
+	padding: 0;
+}
+.navbar-brand img{
+	height: 52px;
+	width: auto;
+	display: block;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navbar-toggler {
+	float: right;
+	border: none;
+	padding-right: 0;
+}
+.navbar-toggler:active,
+.navbar-toggler:focus {
+	outline: none;
+}
+/*menu icon for phone color*/
+.navbar-light .navbar-toggler-icon {
+	width: 24px;
+	height: 17px;
+	background-image: none;
+	position: relative;
+	border-bottom: 1px solid white;
+    transition: all 300ms linear;
+}
+.navbar-light .navbar-toggler-icon:after, 
+.navbar-light .navbar-toggler-icon:before{
+	width: 24px;
+	position: absolute;
+	height: 1px;
+	background-color: white;
+	top: 0;
+	left: 0;
+	content: '';
+	z-index: 2;
+    transition: all 300ms linear;
+}
+.navbar-light .navbar-toggler-icon:after{
+	top: 8px;
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
+	transform: rotate(45deg);
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before {
+	transform: translateY(8px) rotate(-45deg);
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+	border-color: transparent;
+}
+/*navbar menu text color (ipa download, android etc*/
+.nav-link{
+	color: #fff !important;
+	font-weight: 400;
+    transition: all 200ms linear;
+}
+.nav-item:hover .nav-link{
+	color: #ff4242 !important;
+}
+/*navbar "home" menu hover color*/
+.nav-item.active .nav-link{
+	color: #ff4242 !important;
+}
+.nav-link {
+	position: relative;
+	padding: 5px 0 !important;
+	display: inline-block;
+}
+.nav-item:after{
+	position: absolute;
+	bottom: -5px;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	content: '';
+	background-color: #ff4242;
+	opacity: 0;
+    transition: all 200ms linear;
+}
+.nav-item:hover:after{
+	bottom: 0;
+	opacity: 1;
+}
+.nav-item.active:hover:after{
+	opacity: 0;
+}
+.nav-item{
+	position: relative;
+    transition: all 200ms linear;
+}
+/*navbar background color*/
+.bg-light {
+	background-color: #0E0E0E  !important;
+    transition: all 200ms linear;
+}
+.section {
+    position: relative;
+	width: 100%;
+	display: block;
+}
+.full-height {
+    height: 100vh;
+}
+.over-hide {
+    overflow: hidden;
+}
+.absolute-center {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100%;
+  margin-top: 40px;
+	transform: translateY(-50%);
+	z-index: 20;
+}
+/* announcement text*/
+h1 {
+	font-size: 48px;
+	line-height: 1.2;
+	font-weight: 700;
+	color: whitesmoke;
+	text-align: center;
+}
+p {
+	text-align: center;
+	margin: 0;
+	padding-top: 10px;
+	opacity: 1;
+	transform: translate(0);
+    transition: all 300ms linear;
+    transition-delay: 1700ms;
+}
+ 
+body.hero-anime p{
+	opacity: 0;
+	transform: translateY(40px);
+    transition-delay: 1700ms;
+}
+#switch,
+#circle {
+	cursor: pointer;
+	-webkit-transition: all 300ms linear;
+	transition: all 300ms linear; 
+} 
+#switch {
+	width: 60px;
+	height: 8px;
+	border: 2px solid #ff4242;
+	border-radius: 27px;
+	background: #ff4242;
+	position: relative;
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	opacity: 1;
+	transform: translate(0);
+    transition: all 300ms linear;
+    transition-delay: 1900ms;
+}
+body.hero-anime #switch{
+	opacity: 0;
+	transform: translateY(40px);
+    transition-delay: 1900ms;
+}
+#circle {
+	position: absolute;
+	top: -11px;
+	left: -13px;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	background: #000;
+}
+.switched {
+	border-color: #000 !important;
+	background: #ff4242 !important;
+}
+.switched #circle {
+	left: 43px;
+	box-shadow: 0 4px 4px rgba(26,53,71,0.25), 0 0 0 1px rgba(26,53,71,0.07);
+	background: #fff;
+}
+.nav-item .dropdown-menu {
+    transform: translate3d(0, 10px, 0);
+    visibility: hidden;
+    opacity: 0;
+	max-height: 0;
+    display: block;
+	padding: 0;
+	margin: 0;
+    transition: all 200ms linear;
+}
+.nav-item.show .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+	max-height: 999px;
+    transform: translate3d(0, 0px, 0);
+}
+/*drop down menu color background*/
+.dropdown-menu {
+	padding: 10px!important;
+	margin: 0;
+	font-size: 13px;
+	letter-spacing: 1px;
+	color: #212121;
+	background-color: #1f2029;
+	border: none;
+	border-radius: 3px;
+	box-shadow: 0 5px 10px 0 rgb(33,33,33,0.15);
+    transition: all 200ms linear;
+}
+.dropdown-toggle::after {
+	display: none;
+}
+ 
+.dropdown-item {
+	padding: 3px 15px;
+	color: #fff;
+	border-radius: 2px;
+    transition: all 200ms linear;
+}
+.dropdown-item:hover, 
+.dropdown-item:focus {
+	color: #fff;
+	background-color: rgb(255,66,66,0.6);
+}
+ 
+body.dark{
+	color: #fff;
+	background-color: #1f2029;
+}
+body.dark h1{
+	color: #fff;
+}
+body.dark h1 span{
+    transition-delay: 0ms !important;
+}
+body.dark p{
+	color: #fff;
+    transition-delay: 0ms !important;
+}
+body.dark .bg-light {
+	background-color: red !important;
+}
+body.dark .start-header {
+	box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
+}
+body.dark .start-header.scroll-on {
+	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
+}
+body.dark .nav-link{
+	color: #fff !important;
+}
+body.dark .nav-item.active .nav-link{
+	color: #999 !important;
+}
+body.dark .dropdown-menu {
+	color: #fff;
+	background-color: #1f2029;
+	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
+}
+body.dark .dropdown-item {
+	color: #fff;
+}
+body.dark .navbar-light .navbar-toggler-icon {
+	border-bottom: 1px solid #fff;
+}
+body.dark .navbar-light .navbar-toggler-icon:after, 
+body.dark .navbar-light .navbar-toggler-icon:before{
+	background-color: #fff;
+}
+body.dark .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+	border-color: transparent;
+}
+ 
+ 
+@media (max-width: 767px) { 
+	h1{
+		font-size: 38px;
+	}
+	.nav-item:after{
+		display: none;
+	}
+	.nav-item::before {
+		position: absolute;
+		display: block;
+		top: 15px;
+		left: 0;
+		width: 11px;
+		height: 1px;
+		content: "";
+		border: none;
+		background-color: white;
+		vertical-align: 0;
+	}
+	.dropdown-toggle::after {
+		position: absolute;
+		display: block;
+		top: 10px;
+		left: -23px;
+		width: 1px;
+		height: 11px;
+		content: "";
+		border: none;
+		background-color: white;
+		vertical-align: 0;
+		transition: all 200ms linear;
+	}
+	.dropdown-toggle[aria-expanded="true"]::after{
+		transform: rotate(90deg);
+		opacity: 0;
+	}
+	.dropdown-menu {
+		padding: 0 !important;
+		background-color: transparent;
+		box-shadow: none;
+		transition: all 200ms linear;
+	}
+	.dropdown-toggle[aria-expanded="true"] + .dropdown-menu {
+		margin-top: 10px !important;
+		margin-bottom: 20px !important;
+	}
+	body.dark .nav-item::before {
+		background-color: #fff;
+	}
+	body.dark .dropdown-toggle::after {
+		background-color: #fff;
+	}
+	body.dark .dropdown-menu {
+		background-color: transparent;
+		box-shadow: none;
+	}
+}
+
+/* accordion */
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #ccc;
+  color: rgb(44, 43, 43);
+  font-weight: bold;
+}
+
+.accordion:after {
+  content: '\002B';
+  color: #444;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+  
+  /* responsive img */
+  .responsive {
+	width: 100%;
+	height: auto;
+  }
+  
+  img {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 5px;
+	width: 200px;
+  }
+  
+  img:hover {
+	box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  }
+
+
+  
+</style>
+</head>
+
+<body> 
+
+	<body class="hero-anime">	 
+	<div class="navigation-wrap bg-light start-header start-style">
+		<div class="container">
+		<div class="row">
+		<div class="col-12">
+		<nav class="navbar navbar-expand-md navbar-light">	
+		
+		
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+		</button>
+		
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav ml-auto py-4 py-md-0">
+			<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+				<a class="nav-link dropdown-toggle"  href="index.html" role="button" aria-haspopup="true" aria-expanded="false">home</a>
+			</li>
+		</ul>
+		</div>	
+		</nav>
+		</div>
+		</div>
+		</div>	
+	</div>
+
+  <body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+<div style="padding-left:14px">
+
+<h2>VMOS Virtual Machine with Root</h2>
+<b>VMOS</b> is an APP software based on Virtual Machine (VM). The VMOS system can activate root by one-click. VMOS can be installed in the form of a normal APP to Linux or Android system through VM technology. It's also a one-click App cloner. Moreover, VMOS is not controlled by the host system. (Android on the phone).
+<hr>
+
+<h3>DEVICE REQUIREMENTS:</h3>
+  <ul>
+      <li>3 GB+ RAM</li>
+      <li>more than 32GB free storage</li>
+      <li>phone system is higher or equal to Android 5.1</li>
+  </ul>
+  
+  <h3>HOW TO INSTALL:</h3>
+
+  <button class="accordion"><b>Step 1: Prerequisites</b></button>
+  <div class="panel">
+    Download the following below:
+    <ol>
+      <li>VMOS.</li>
+      <li>Pokemon Go <b>armeabi-v7a</b> version.</li>
+      <li>Lucky Patcher.</li>
+      <li>GPS Joystick.</li>
+      <li>VFIN</li>  
+    </ol>  
+  </div>
+  
+  <button class="accordion"><b>Step 2: Setting up VMOS</b></button>
+  <div class="panel">
+    <ol>    
+      <li>Open VMOS app.</li>
+      <li>Authorize > Allow access.</li>
+      <li>Wait for it to complete installing.</li>  
+      <li>Close the ads...</li>
+      <li>Now you're at the home screen.</li>
+    </ol>  
+  </div>
+  
+  <button class="accordion"><b>Step 3: Disable Play Protect</b></button>
+  <div class="panel">
+    <ol>    
+      <li>Open Google Play Store.</li>
+      <li>Go to settings (3 lines) top left corner.</li>
+      <li>Press on Play Protect.</li>  
+      <li>Press on "Gear icon" top right corner.</li>
+      <li>Press "Scan device for security threats".</li>
+      <li>Press OK.</li>
+      <li><b>Play Protect is now disabled. </b>Green changes to Grey.</li>
+    </ol>  
+  </div>
+  
+  <button class="accordion"><b>Step 4: Import APK files</b></button>
+  <div class="panel">
+    <ol>    
+      <li>Open VMOS app</li>
+      <li>Press on "Folder button" (yellow circle button) on the home screen.</li>
+      <li>Press on "3 white lines button" (top-left corner)</li>  
+      <li>Press on "Phone storage" then #5 or #6.</li>
+      <li>Press on "Internal storage" if you used your phone to download the app APK files.</li>
+      <li>Press on "Extend memory storage" for your micro-SD card storage.</li>
+      <li>Press the back button to repeat this step if you do not know where your files are stored.</li>
+      <li>[Press on all the apps you want: ES File Manager, Pokemon Go, GPS Joystick, Lucky Patcher, and VFIN.</li>
+      <li>Press on "Import (5)" blue button.</li>
+      <li>If you get "Blocked by Play Protect" for Lucky Patcher, press on details > Install anyway (unsafe).</li>    
+      <li>It should say in the Import record window that all the apps installed.</li>
+      <li>Go to home screen to check.</li>
+    </ol>  
+  </div>
+  
+  <button class="accordion"><b>Step 5: Turning on root in Developer Options</b></button>
+  <div class="panel">
+    <ol>    
+      <li>Turn on root access in Settings by press on "grey circle button with white diamond".</li>
+      <li>System settings.</li>
+      <li>Scroll down to tap on "About Phone".</li>  
+      <li>Tap "Build number" 7 times until it says "you are now a developer"</li>
+      <li>Press back button.</li>
+      <li>Should see "Developer Options"</li>
+      <li>Tap Developer Options.</li>
+      <li>Enable USB Debugging.</li>
+      <li>Enable ROOT.</li>
+      <li>Go to home screen.</li>
+      <li>Press on VMOS icon to turn off.</li>          
+    </ol>  
+  </div>
+  
+  <button class="accordion"><b>Step 6: Settings up Lucky Patcher</b></button>
+  <div class="panel">
+    <ol>    
+      <li>Open VMOS app.</li>
+      <li>Open Lucky Patcher and allow it to install.</li>
+      <li>Allow with Google Play Protect" (if ever).</li>  
+      <li>Press Done.</li>
+      <li>Press on "Remember this Choice forever".</li>
+      <li>Press on Allow.</li>
+      <li>Repeat step 5 for Super User access.</li>
+      <li><b>NOTE:</b> Update is optional.</li>          
+    </ol>  
+  </div>
+  
+  <button class="accordion"><b>Step 7: Systemizing GPS Joystick</b></button>
+  <div class="panel">
+    <ol>    
+      <li>Find "GPS Joystick" or "ur preferred fake gps app" inside Lucky Patcher app.</li>
+      <li>Press on "GPS Joystick" or "ur preferred fake gps app" in the list.</li>
+      <li>Press on <b>Tools</b>.</li>  
+      <li>Press on <b>"Move to /system/app"</b> then <b>YES</b>.</li>
+      <li>Press NO to Reboot to apply changes.</li>
+      <li>Press white circle to go to home screen.</li>
+      <li>Press on VMOS icon to turn off.</li>            
+    </ol>  
+  </div>
+  
+  <button class="accordion"><b>Step 8: Removing "XBIN" and "Superuser" folder</b></button>
+  <div class="panel">
+    <ol>
+        <li>Open VMOS app.</li>
+        <li>Open ES File Explorer app then press OK (Single toolbar).</li>
+        <li>Press "3 white dots" (top-right) then "view" then "large / medium / small detail". This will make it easier to see folder names. On some devices, you press on "view" then "large / medium / small detail".</li>  
+        <li>Press "3 white bullet points" (top left) then press on "Root Explorer" under Tools</li>
+        <li>Press on "Remember choice for ever" then "Allow".</li>
+        <li>Superuser should grant access with a pop-up then fades away.</li>
+        <li>Press the back button to close this menu.</li>   
+        <li>Press on " sdcard / device / whatever text" on the right of "3 white bullet points".</li>         
+        <li>If your phone has a micro-sd card slot, you need to select "device".</li>
+        <li>Should say "Device" in blue font color on top once selected.</li>
+        <li>Scroll down then open <b>"system"</b> folder.</li>
+        <li>Find the "xbin" folder.</li>
+        <li>Press and hold down on "xbin" folder. This is the only folder that is checked.</li>
+        <li>Press on the "trash can" on top to delete it.</li>
+        <li>Pop-up "Are you sure to delete the folder: xbin?" then press OK.</li>   
+        <li>Superuser dialog box pops up and the folder is now deleted.</li>
+        <li>Do the same with <b>"superuser"</b> folder under <b>"/system/app/"</b>.</li>   
+        <li>Go back to home screen.</li>              
+    </ol> 
+  </div>
+  
+  <button class="accordion"><b>Step 9: Turn OFF root in VMOS</b></button>
+  <div class="panel">
+    <ol>    
+      <li>Go to Settings by pressing on "grey circle button with white diamond".</li>
+      <li>System settings.</li>
+      <li>Developer Options.</b></li>  
+      <li>Press on "ROOT" to turn off root.</li>
+      <li>USB Debugging can be left on.</li>
+      <li>Press white circle to go to home screen.</li>
+      <li>Press on VMOS icon to turn off.</li>            
+    </ol>  
+  </div>
+  
+  <button class="accordion"><b>Step 10: Setting up ur GPS Joystick</b></button>
+  <div class="panel">
+  <p>I'm pretty sure u know how to do this ;)</p> 
+  </div>
+  
+  <button class="accordion"><b>Step 11: Playing the game</b></button>
+  <div class="panel">
+      <ol>    
+          <li>Set your location with spoofing app and your joystick must appear.</li>
+          <li>Open the game.</li>
+          <li>Go to home screen.</b></li>  
+          <li>Open VFIN app.</li>
+          <li>Press on "Click to Test VMOS = error, unknown, or normal" <b>It does not matter what you get.</b></li>
+          <li>Press on Pokemon GO Bypass.</li>
+          <li>Press on Kill Process then a pop-up appears.</li>      
+          <li>Press on the white square to switch back to the game.</li>      
+          <li>Wait for the game to load and start spoofing.</li>
+      </ol>  
+  </div>
+  
+  <button class="accordion"><b>Step 12: YOU MUST DO THESE IN-ORDER EVERY TIME YOU PLAY THE GAME</b></button>
+  <div class="panel">
+      <ol>    
+          <li>Open VMOS.</li>
+          <li>Watch then close ad.</li>
+          <li>Wait for VMOS to load.</b></li>  
+          <li>Open VFIN app.</li>
+          <li>Current VMOS environment" will either say "unknown", "error", or "normal". This has no effect and does not matter. On different phones and tablets, it will always say something different. You do not wait for this to change.</li>
+          <li>Press on "Click to test VMOS". There will be a "loading screen" pop up will appear fast and goes away. Total wait time is 1 second.</li>
+          <li>Press on "Pokemongo Bypass". There will be a "loading screen" pop up will appear fast and goes away. Total wait time is 1 second.</li>      
+          <li>Press on "Kill Process", a popup of "killed ####" (random set of numbers) will appear then disappears, wait 1 second.</li>      
+          <li>After you pressed on all 3 buttons, you do not wait for "Current VMOS environment" to change because it will stay the same on your device. If it does change, you just need to continue with the steps. If you wait too long, you need to start Part 13 again without closing VMOS.</li>
+          <li>Open your Spoofing app and set a location for the joystick to appear on the screen.</li>
+          <li>Press the Home button.</li>
+          <li>Open Pokemon Go and wait 30 to 60 seconds.</li>
+          <li>Play the game.</li>        
+      </ol> 
+      <b>NOTE: If it does not work, you need to do step 12 again and DO NOT WAIT MORE THAN 1 second after pressing on the 3 buttons (Step 6 to 8). </b><br>
+      <span style='font-size:25px;'>&#9755; <a href="https://www.youtube.com/watch?v=nrcI2FWjigU&feature=youtu.be" target="_blank"> VIDEO GUIDE</a></span>   
+  </div> 
+    
+  <hr>
+  <h3>DOWNLOAD LINKS:</h3>  
+     
+      <b>VMOS Virtual Machine With Root Android</b> <form method="get" action="https://www.vmos.com" target="_blank">
+        <button type="submit">Download</button>
+      </form>
+      <br>
+  
+      <b>Pokémon GO (armeabi-v7a)</b> <form method="get" action="https://www.apkmirror.com/?post_type=app_release&searchtype=apk&s=pokemon+go" target="_blank">
+        <button type="submit">Download</button>
+        </form>
+        <br>
+  
+        <b>ES File Explorer Pro</b> <form method="get" action="https://drive.google.com/file/d/1Eczd8otlt-ekx-cMMHJfy-NQZZhaj1vN/view" target="_blank">
+            <button type="submit">Download</button>
+        </form>
+        <br>
+  
+        <b>Lucky Patcher</b> <form method="get" action="https://drive.google.com/file/d/1QhCkpZM_s5Av9iW0id8Te68ZacN6BzXI/view" target="_blank">
+            <button type="submit">Download</button>
+        </form>
+        <br>
+  
+        <b>GPS Joystick (Cloned)</b> <form method="get" action="http://idroidsupport.x10host.com/gpsjoystick_app.html" target="_blank">
+            <button type="submit">Download</button>
+        </form>
+        <br>
+  
+        <b>VFIN</b> <form method="get" action="https://m.apkpure.com/fin/hubertadamus.codenamefin/download/12-APK#menu" target="_blank">
+            <button type="submit">Download</button>
+        </form>
+        <br>
+        <hr>  
+
+  
+        <h3><font color="#f70040">faq:</font></h3>
+
+        <button class="accordion">Unable to authenticate.</button>
+        <div class="panel">
+            <ul>
+                <li><b>FIX #1:</b></li>
+                    <ul>
+                        <li>Stop VMOS, log on into pokemon go on your phone then close it. Start VMOS again and try to log-in.</li>
+                    </ul>
+                <li><b>FIX #2:</b></li>
+                    <ul>
+                        <li>Always make sure Find My Device is disabled. Go to System Settings> Security> Device Administrator> Untick Find My Device. Hit Deactive when prompted.</li>
+                        <li>Reboot VMOS.</li>
+                        <li>Open GPS Joystick. Make sure the GPS Joystick is installed in the system/app.</li>
+                        <li>Open VFIN.</li>
+                        <li>In VFIN app hit the KILL PROCESS 2-3 times.</li>
+                        <li>Still on VMOS press the BYPASS POKEMONGO button 1 time.</li>
+                        <li>Minimize VFIN and open Pokémon GO.</li>
+                    </ul>
+                <li><b>FIX #3:</b></li>
+                    <ul>
+                        <li>Update VFIN to v1.0.2 (link above).</li>
+                        <li>Run App Ninja GPS Joystick</li>
+                        <li>Open VFIN then minimize VFIN.</li>
+                        <li>Run Pokemon GO. Hit Login (Google, PTC)</li>
+                        <li>Wait for about 5-6 seconds then minimize Pokemon Go.</li>
+                        <li>Open VFIN. Hit Kill Process 2 times then hit POKEMONGO BYPASS 1 time.</li>
+                        <li>Open Pokemon GO and wait till logged.</li>
+                    </ul>
+            </ul>
+         
+        </div>
+        
+        <button class="accordion">The device or OS is not compatible.</button>
+        <div class="panel">
+          Make sure ROOT is disabled in VMOS and all files are deleted in VMOS (step 8).
+        </div>
+        
+        <button class="accordion">Error 11 "GPS signal not found"/ Error 12 "Failed to detect location".</button>
+        <div class="panel">
+          Launch GPS Joystick, (the first time it will prompt you "Mock Location Required"), allow mock location in developer option after the joystick starts go back to developer options and disable mock location..
+        </div>
+        
+        <button class="accordion">Game only loads halfway.</button>
+        <div class="panel">
+          Kill pokemon go then back to main phone, log-in to pokemon go then log out, go back to vmos and reload pogo.
+        </div>
+        
+        <button class="accordion">Game is laggy.</button>
+        <div class="panel">
+          <ul>
+            <li>Try to re install VMOS.</li>
+            <li>Try to adjust vmos resolution.</li>    
+          </ul> 
+        </div>
+        
+        <button class="accordion">How to update Pokemon Go?</button>
+        <div class="panel">
+              <b>Option 1:</b>
+            <ul>
+              <li>Delete Pokemon Go in VMOS then minimize.</li>
+              <li>Download and install <b>Pokemon Go (armeabi-v7a)</b> version.</li>
+              <li>Click the Import icon (lower right corner of the screen).</li>
+                <ul>
+                  <li>..before importing click top right corner 3 dots> import record> edit> select Pokemon Go> delete> YES> go back to import apps.</li>
+                </ul>
+              <li>Select the updated Pokemon  Go app and import. If it gives error try until it says imported. (Sometimes it needs several tries)</li>
+              <li>...and you are done! Your Pokemon Go is now updated to the latest version.</li>
+            </ul> 
+        
+            <b>Option 2: in VMOS</b>
+            <ul>
+              <li>Download google chrome browser (if you don't like the vmos browser).</li>
+              <li>Go to apkmirror site and search for Pokemon go.</li>
+              <li>Download and install Pokemon Go <b>(armeabi-v7a)</b> version.</li>
+            </ul>
+        </div>
+  
+  <script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        } 
+      });
+    }
+    </script>
+ <!-- 
+<font size=5px;>
+ <b>official site:</b> <a href="http://www.cydiaimpactor.com/" target="_blank">cydia impactor</a>
+
+
+<font color="#f70040"><b>faq:</b></font>
+  <button class="accordion"><b>#</b></button>
+  		<div class="panel">
+   		 ?       
+  		</div>
+</font>
+<hr>-->
+<div class="section mt-5">
+<div class="container">
+<div class="row">
+<div class="col-12">
+
+</div>
+</div>	
+</div>		
+</div>		
+
+
+</div>
+<div class="my-5 py-5">
+</div>
+</body>
+ 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'></script>
+<script  src="function.js"></script>
+ 
+</body>
+</html>

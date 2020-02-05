@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>root</title>
+  <link rel="icon" href="icon/android.png" type="image/png" sizes="32x32">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=devanagari,latin-ext'>
+  <link rel="stylesheet" href="./style.css"> 
+<style>
+
+body{
+    font-family: 'Poppins', sans-serif;
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: 400;
+	color: #212112;
+	background-size:7%;
+	background-color: white !important;
+	overflow-x: hidden;
+	transition: all 200ms linear;
+
+}
+::selection {
+	color: #fff;
+	background-color: #ff4242;
+}
+::-moz-selection {
+	color: #fff;
+	background-color: #ff4242;
+}
+.start-header {
+	opacity: 1;
+	transform: translateY(0);
+	padding: 10px 0;
+	box-shadow: 0 10px 30px 0 rgb(33,33,33,0.15);
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.start-header.scroll-on {
+	box-shadow: 0 5px 10px 0 rgb(33,33,33,0.15);
+	padding: 5px 0;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.start-header.scroll-on .navbar-brand img{
+	height: 28px;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navigation-wrap{
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navbar{
+	padding: 0;
+}
+.navbar-brand img{
+	height: 52px;
+	width: auto;
+	display: block;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navbar-toggler {
+	float: right;
+	border: none;
+	padding-right: 0;
+}
+.navbar-toggler:active,
+.navbar-toggler:focus {
+	outline: none;
+}
+/*menu icon for phone color*/
+.navbar-light .navbar-toggler-icon {
+	width: 24px;
+	height: 17px;
+	background-image: none;
+	position: relative;
+	border-bottom: 1px solid white;
+    transition: all 300ms linear;
+}
+.navbar-light .navbar-toggler-icon:after, 
+.navbar-light .navbar-toggler-icon:before{
+	width: 24px;
+	position: absolute;
+	height: 1px;
+	background-color: white;
+	top: 0;
+	left: 0;
+	content: '';
+	z-index: 2;
+    transition: all 300ms linear;
+}
+.navbar-light .navbar-toggler-icon:after{
+	top: 8px;
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
+	transform: rotate(45deg);
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before {
+	transform: translateY(8px) rotate(-45deg);
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+	border-color: transparent;
+}
+/*navbar menu text color (ipa download, android etc*/
+.nav-link{
+	color: #fff !important;
+	font-weight: 400;
+    transition: all 200ms linear;
+}
+.nav-item:hover .nav-link{
+	color: #ff4242 !important;
+}
+/*navbar "home" menu hover color*/
+.nav-item.active .nav-link{
+	color: #ff4242 !important;
+}
+.nav-link {
+	position: relative;
+	padding: 5px 0 !important;
+	display: inline-block;
+}
+.nav-item:after{
+	position: absolute;
+	bottom: -5px;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	content: '';
+	background-color: #ff4242;
+	opacity: 0;
+    transition: all 200ms linear;
+}
+.nav-item:hover:after{
+	bottom: 0;
+	opacity: 1;
+}
+.nav-item.active:hover:after{
+	opacity: 0;
+}
+.nav-item{
+	position: relative;
+    transition: all 200ms linear;
+}
+/*navbar background color*/
+.bg-light {
+	background-color: #0E0E0E  !important;
+    transition: all 200ms linear;
+}
+.section {
+    position: relative;
+	width: 100%;
+	display: block;
+}
+.full-height {
+    height: 100vh;
+}
+.over-hide {
+    overflow: hidden;
+}
+.absolute-center {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100%;
+  margin-top: 40px;
+	transform: translateY(-50%);
+	z-index: 20;
+}
+/* announcement text*/
+h1 {
+	font-size: 48px;
+	line-height: 1.2;
+	font-weight: 700;
+	color: whitesmoke;
+	text-align: center;
+}
+p {
+	text-align: center;
+	margin: 0;
+	padding-top: 10px;
+	opacity: 1;
+	transform: translate(0);
+    transition: all 300ms linear;
+    transition-delay: 1700ms;
+}
+ 
+body.hero-anime p{
+	opacity: 0;
+	transform: translateY(40px);
+    transition-delay: 1700ms;
+}
+#switch,
+#circle {
+	cursor: pointer;
+	-webkit-transition: all 300ms linear;
+	transition: all 300ms linear; 
+} 
+#switch {
+	width: 60px;
+	height: 8px;
+	border: 2px solid #ff4242;
+	border-radius: 27px;
+	background: #ff4242;
+	position: relative;
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	opacity: 1;
+	transform: translate(0);
+    transition: all 300ms linear;
+    transition-delay: 1900ms;
+}
+body.hero-anime #switch{
+	opacity: 0;
+	transform: translateY(40px);
+    transition-delay: 1900ms;
+}
+#circle {
+	position: absolute;
+	top: -11px;
+	left: -13px;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	background: #000;
+}
+.switched {
+	border-color: #000 !important;
+	background: #ff4242 !important;
+}
+.switched #circle {
+	left: 43px;
+	box-shadow: 0 4px 4px rgba(26,53,71,0.25), 0 0 0 1px rgba(26,53,71,0.07);
+	background: #fff;
+}
+.nav-item .dropdown-menu {
+    transform: translate3d(0, 10px, 0);
+    visibility: hidden;
+    opacity: 0;
+	max-height: 0;
+    display: block;
+	padding: 0;
+	margin: 0;
+    transition: all 200ms linear;
+}
+.nav-item.show .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+	max-height: 999px;
+    transform: translate3d(0, 0px, 0);
+}
+/*drop down menu color background*/
+.dropdown-menu {
+	padding: 10px!important;
+	margin: 0;
+	font-size: 13px;
+	letter-spacing: 1px;
+	color: #212121;
+	background-color: #1f2029;
+	border: none;
+	border-radius: 3px;
+	box-shadow: 0 5px 10px 0 rgb(33,33,33,0.15);
+    transition: all 200ms linear;
+}
+.dropdown-toggle::after {
+	display: none;
+}
+ 
+.dropdown-item {
+	padding: 3px 15px;
+	color: #fff;
+	border-radius: 2px;
+    transition: all 200ms linear;
+}
+.dropdown-item:hover, 
+.dropdown-item:focus {
+	color: #fff;
+	background-color: rgb(255,66,66,0.6);
+}
+ 
+body.dark{
+	color: #fff;
+	background-color: #1f2029;
+}
+body.dark h1{
+	color: #fff;
+}
+body.dark h1 span{
+    transition-delay: 0ms !important;
+}
+body.dark p{
+	color: #fff;
+    transition-delay: 0ms !important;
+}
+body.dark .bg-light {
+	background-color: red !important;
+}
+body.dark .start-header {
+	box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
+}
+body.dark .start-header.scroll-on {
+	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
+}
+body.dark .nav-link{
+	color: #fff !important;
+}
+body.dark .nav-item.active .nav-link{
+	color: #999 !important;
+}
+body.dark .dropdown-menu {
+	color: #fff;
+	background-color: #1f2029;
+	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
+}
+body.dark .dropdown-item {
+	color: #fff;
+}
+body.dark .navbar-light .navbar-toggler-icon {
+	border-bottom: 1px solid #fff;
+}
+body.dark .navbar-light .navbar-toggler-icon:after, 
+body.dark .navbar-light .navbar-toggler-icon:before{
+	background-color: #fff;
+}
+body.dark .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+	border-color: transparent;
+}
+ 
+ 
+@media (max-width: 767px) { 
+	h1{
+		font-size: 38px;
+	}
+	.nav-item:after{
+		display: none;
+	}
+	.nav-item::before {
+		position: absolute;
+		display: block;
+		top: 15px;
+		left: 0;
+		width: 11px;
+		height: 1px;
+		content: "";
+		border: none;
+		background-color: white;
+		vertical-align: 0;
+	}
+	.dropdown-toggle::after {
+		position: absolute;
+		display: block;
+		top: 10px;
+		left: -23px;
+		width: 1px;
+		height: 11px;
+		content: "";
+		border: none;
+		background-color: white;
+		vertical-align: 0;
+		transition: all 200ms linear;
+	}
+	.dropdown-toggle[aria-expanded="true"]::after{
+		transform: rotate(90deg);
+		opacity: 0;
+	}
+	.dropdown-menu {
+		padding: 0 !important;
+		background-color: transparent;
+		box-shadow: none;
+		transition: all 200ms linear;
+	}
+	.dropdown-toggle[aria-expanded="true"] + .dropdown-menu {
+		margin-top: 10px !important;
+		margin-bottom: 20px !important;
+	}
+	body.dark .nav-item::before {
+		background-color: #fff;
+	}
+	body.dark .dropdown-toggle::after {
+		background-color: #fff;
+	}
+	body.dark .dropdown-menu {
+		background-color: transparent;
+		box-shadow: none;
+	}
+}
+
+/* accordion */
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #ccc;
+  color: rgb(44, 43, 43);
+  font-weight: bold;
+}
+
+.accordion:after {
+  content: '\002B';
+  color: #444;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+  
+  /* responsive img */
+  .responsive {
+	width: 100%;
+	height: auto;
+  }
+  
+  img {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 5px;
+	width: 200px;
+  }
+  
+  img:hover {
+	box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  }
+
+
+  
+</style>
+</head>
+
+<body> 
+
+	<body class="hero-anime">	 
+	<div class="navigation-wrap bg-light start-header start-style">
+		<div class="container">
+		<div class="row">
+		<div class="col-12">
+		<nav class="navbar navbar-expand-md navbar-light">	
+		
+		
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+		</button>
+		
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav ml-auto py-4 py-md-0">
+			<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+				<a class="nav-link dropdown-toggle"  href="index.html" role="button" aria-haspopup="true" aria-expanded="false">home</a>
+			</li>
+		</ul>
+		</div>	
+		</nav>
+		</div>
+		</div>
+		</div>	
+	</div>
+
+<body>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div style="padding-left:14px">
+
+<h2>Root your phone with Magisk</h2>
+<b>Rooting</b> is a process that allows you to attain root access to the Android operating system code (the equivalent term for Apple devices id jailbreaking). It gives you privileges to modify the software code on the device or install other software that the manufacturer wouldn’t normally allow you to. And for good mobile security reasons: they don’t want users to make modifications to the phones that could result in accidents beyond repair; it is easier for them to offer support if they allow users to only use the same unmodified version of the software. But tech savvy users have already developed rooting methods, which vary depending on device.
+<hr>
+
+<h3><font color=red>WARNING!!!</font></h3> 
+  Rooting a device may void the warranty on the device. It may also make the device unstable or if not done properly, may completely brick the device. Some methods may install additional apps/software on your device. We does not take any responsibility for your device. Root at your own risk and only if you understand what you are doing!
+  <br>
+  <br>
+  <h3>NOTE:</h3> Download and save a stable Magisk into your phone first before installing TWRP recovery.  
+  <br>
+  <br>
+
+  <h3>Step 1: Install TWRP</h3>
+  <form method="get" action="twrp.html" target="_blank">  
+    <button type="submit"><font color=red>TWRP Guides</font></button>
+  </form>
+  <br>
+  
+  <h3>Step 2: Install Magisk</h2> 
+  <form method="get" action="https://forum.xda-developers.com/apps/magisk/official-magisk-v7-universal-systemless-t3473445" target="_blank">  
+    <button type="submit"><font color=red>XDA: Magisk Download</font></button>
+  </form>
+  <br>
+
+  <ol>
+    <li>Boot into TWRP recovery. Press and hold <b>“Home + Power + Volume Up”</b> buttons for a few seconds and as soon as the logo appears. Now, your device will boot into TWRP recovery mode. </li>
+    You will reach a screen asking you if you want to allow system modifications. Swipe to the right.<br>
+    <br>
+    <li>Tap the "Install" button in TWRP's main menu. From there, navigate to where you saved the magisk zip file and select it.</li>
+    <br>
+    <li>Swipe the slider at the bottom of the screen to install Magisk, then tap "Reboot System". It may take 2-5 minutes for the device to finish setting itself up.</li>
+    
+    <a target="_blank" href="magisk/twrp-ss.jpg">
+        <img src="magisk/twrp-ss.jpg" alt="image" style="width:300px">
+      </a>
+      <br>
+      <font size="1"><b>click image to enlarge</b></font>
+      <br>
+    </ol>   
+
+  <h3>Step 3: Setting-up Magisk Manager (Hide ROOT)</h3> 
+  <ol>
+      <b>NOTE:</b> Base on Magisk v20.3 and Magisk Manager v7.5.1
+      <br>
+      <br>
+    <li>Open <b>MAGISK MANAGER</b> app>> <b>MENU icon (3line upper left)</b>>> <b>SETTINGS</b>>> tap <b>HIDE MAGISK MANAGER</b> (wait until its done downloading/ installing)</li>
+    <a target="_blank" href="magisk/magisk1-3.jpg">
+        <img src="magisk/magisk1-3.jpg" alt="image" style="width:300px">
+      </a>
+      <br>
+      <font size="1"><b>click image to enlarge</b></font>
+      <br>
+        <br>
+  
+    <li>when its done, tap <b>MENU</b> icon again >><b>SETTINGS</b> >>enable <b>MAGISK HIDE.</b></li>
+    <a target="_blank" href="mmagisk/magisk4.jpg">
+        <img src="magisk/magisk4.jpg" alt="image" style="width:300px">
+      </a>
+      <br>
+      <font size="1"><b>click image to enlarge</b></font>
+      <br>
+        <br>
+  
+    <li>close <b>Mananger</b> app then open it again. <br><br></li>
+  
+    <b>NOTE:</b>  Do not enable magisk core only mode if you're using a module like appsystemizer or smali patcher.
+   
+  <br><br>
+    <li>tap <b>MENU</b> icon then select <b>MAGISK HIDE</b></li>
+    <a target="_blank" href="magisk/step4.jpg">
+        <img src="magisk/step4.jpg" alt="image" style="width:300px">
+      </a>
+      <br>
+      <font size="1"><b>click image to enlarge</b></font>
+      <br>
+        <br>
+  
+      <ul>
+        <li>look for and select <b>POKEMON GO</b> app (required)</li>
+        <li>look for and select your <b>gps mocking app</b> (optional)</li>
+      </ul>
+      <br>
+    
+    <li>go back to <b>SETTINGS</b> tap <b>CLEAR REPO CACHE</b> then close app.</li>
+    <a target="_blank" href="magisk/repo.jpg">
+        <img src="magisk/repo.jpg" alt="image" style="width:300px">
+      </a>
+      <br>
+      <font size="1"><b>click image to enlarge</b></font>
+      <br>
+        <br>   
+  </ol>
+
+  <h3>Step 4: SafetyNet Check</h3>
+  <ol>
+  <li>Tap <b>Advance Settings>> select 2 preserve options>> tap the circling arrow >></b> YES when prompted to download blah blah blah!</li>
+  <a target="_blank" href="magisk/magisk-verify.jpg">
+    <img src="magisk/magisk-verify.jpg" alt="image" style="width:300px">
+  </a>
+  <br>
+  <font size="1"><b>click image to enlarge</b></font>
+  <br> 
+  </ol> 
+  
+  <h3>Step 5: Try to run Pokemon Go.</h3>
+<hr>
+
+<h3><font color="#f70040">faq:</font></h3>
+<button class="accordion"><b>failed safetyNet check!</b></button>
+  <div class="panel">
+    If you're is having trouble passing safetyNet check, download <b>SafetyPatch</b> module by hackintosh5 or via Magisk.
+  </div>
+
+
+  
+  <script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        } 
+      });
+    }
+    </script>
+ <!-- 
+<font size=5px;>
+ <b>official site:</b> <a href="http://www.cydiaimpactor.com/" target="_blank">cydia impactor</a>
+
+
+<font color="#f70040"><b>faq:</b></font>
+  <button class="accordion"><b>#</b></button>
+  		<div class="panel">
+   		 ?       
+  		</div>
+</font>
+<hr>-->
+<div class="section mt-5">
+<div class="container">
+<div class="row">
+<div class="col-12">
+
+</div>
+</div>	
+</div>		
+</div>		
+
+
+</div>
+<div class="my-5 py-5">
+</div>
+</body>
+ 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'></script>
+<script  src="function.js"></script>
+ 
+</body>
+</html>

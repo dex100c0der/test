@@ -1,15 +1,25 @@
-/* Code By Webdevtrick ( https://webdevtrick.com ) */
-@import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=devanagari,latin-ext');
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>xcode</title>
+  <link rel="icon" href="icon/ios.png" type="image/png" sizes="32x32">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=devanagari,latin-ext'>
+  <link rel="stylesheet" href="./style.css"> 
+<style>
+
 body{
     font-family: 'Poppins', sans-serif;
 	font-size: 16px;
 	line-height: 24px;
 	font-weight: 400;
-	color: white;
-	background-size: 7%;
-	background-color: #1f2029;
+	color: #212112;
+	background-size:7%;
+	background-color: white !important;
 	overflow-x: hidden;
-    transition: all 200ms linear;
+	transition: all 200ms linear;
+
 }
 ::selection {
 	color: #fff;
@@ -102,15 +112,15 @@ body{
 /*navbar menu text color (ipa download, android etc*/
 .nav-link{
 	color: #fff !important;
-	font-weight: 500;
+	font-weight: 400;
     transition: all 200ms linear;
 }
 .nav-item:hover .nav-link{
 	color: #ff4242 !important;
 }
-/*navbar "home" menu color*/
+/*navbar "home" menu hover color*/
 .nav-item.active .nav-link{
-	color: #ff1a1a !important;
+	color: #ff4242 !important;
 }
 .nav-link {
 	position: relative;
@@ -164,25 +174,24 @@ body{
 	transform: translateY(-50%);
 	z-index: 20;
 }
-
 /* announcement text*/
 h1 {
 	font-size: 48px;
 	line-height: 1.2;
 	font-weight: 700;
-	color: white;
+	color: whitesmoke;
 	text-align: center;
 }
 p {
 	text-align: center;
 	margin: 0;
 	padding-top: 10px;
-	color: #ff1a1a;	
+	opacity: 1;
+	transform: translate(0);
+    transition: all 300ms linear;
+    transition-delay: 1700ms;
 }
-
-h2 {color: #0074d0;
-
-}
+ 
 body.hero-anime p{
 	opacity: 0;
 	transform: translateY(40px);
@@ -292,7 +301,7 @@ body.dark p{
     transition-delay: 0ms !important;
 }
 body.dark .bg-light {
-	background-color: #14151a !important;
+	background-color: red !important;
 }
 body.dark .start-header {
 	box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
@@ -373,13 +382,231 @@ body.dark .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 		margin-bottom: 20px !important;
 	}
 	body.dark .nav-item::before {
-		background-color: red;
+		background-color: #fff;
 	}
 	body.dark .dropdown-toggle::after {
-		background-color: red;
+		background-color: #fff;
 	}
 	body.dark .dropdown-menu {
 		background-color: transparent;
 		box-shadow: none;
 	}
 }
+
+/* accordion */
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #ccc;
+  color: rgb(44, 43, 43);
+  font-weight: bold;
+}
+
+.accordion:after {
+  content: '\002B';
+  color: #444;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+  
+  /* responsive img */
+  .responsive {
+	width: 100%;
+	height: auto;
+  }
+  
+  img {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 5px;
+	width: 200px;
+  }
+  
+  img:hover {
+	box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  }
+</style>
+</head>
+
+<body> 
+
+	<body class="hero-anime">	 
+	<div class="navigation-wrap bg-light start-header start-style">
+		<div class="container">
+		<div class="row">
+		<div class="col-12">
+		<nav class="navbar navbar-expand-md navbar-light">	
+		
+		
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+		</button>
+		
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav ml-auto py-4 py-md-0">
+			<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+				<a class="nav-link dropdown-toggle"  href="index.html" role="button" aria-haspopup="true" aria-expanded="false">home</a>
+			</li>
+		</ul>
+		</div>	
+		</nav>
+		</div>
+		</div>
+		</div>	
+	</div>
+
+	<body>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+<div style="padding-left:14px">
+
+<h2>Sideload IPA using xCode</h2>
+<hr>
+
+<h3>REQUIREMENTS:</h3>
+<ul>
+    <li>macOS 10.14.4 (If your on Windows, use VM to install macOS)</li>
+    <li>XCode 11.2</li>
+    <li>iOS App Signer</li>
+    <li>iDevice running iOS 12+</li>
+</ul>
+<br>
+How to install macOS Mojave on VirtualBox with Windows 10 64bit.
+<br>
+<span style='font-size:25px;'>&#9755; <a href="https://www.youtube.com/watch?v=sGqJYMjojXc" target="_blank">VIDEO GUIDE</a><br> </span>
+<br>
+
+<h3>HOW TO INSTALL:</h3>
+<ol>
+  <li>Download Xcode (link below)</li>
+  <li>Download iOS App Signer (link below)</li>
+  <li>Open Xcode</li>
+  <li>Create new Xcode project (Shift + Cmd + N) > Single View Application</li>
+  <li>Fill out Product Name > Organisation Name > Organisation Identifier</li>  
+  <li>Select the folder where the .ipa is saved/ located</li>
+  <li>Select the top most name on the left hand side bar</li>
+  <li>Navigate to Signing & Capabilities (top bar on project side window)</li>
+  <li>Select team or add an account <b>(for adding you need to add your Apple ID with your actual password)</b></li>
+  <li>If it doesn’t show any errors open iOS App Signer</li>
+  <li>Select the .ipa > change signing certificate to Apple Development if yours is on iPhone > select the profile created with Xcode</li>
+  <li>Press start then input a new name for the file </li> 
+  <li>Go back to Xcode then Select Window > Devices and Simulators (Shift + Cmd + 2)</li> 
+  <li>With your iDevice connected, under Installed Apps, select the + and the file generated by the app signer.</li>
+  <li>Once it’s done installing, on your device go to Settings > General > and trust the profile like usual when impacting</li>
+  <li>Done!</li>
+</ol>   
+
+<b>NOTE:</b> If you are having trouble installing and are getting an error message similar to <b>unable to install</b>, Turn off Re-Sign only in IOS app signer.
+<br>
+<br>
+<span style='font-size:25px;'>&#9755; <a href="https://www.youtube.com/watch?v=ULZBjjDM_Z4&feature=youtu.be" target="_blank">Video Guide</a><br></span> 
+
+<hr>
+    <h3>DOWNLOAD LINKS:</h3>
+       
+        <b>macOS Mojave 10.14.6 (5.64 GB)</b>
+        <form method="get" action="https://support.apple.com/en_AU/downloads/" target="_blank">
+          <button type="submit">DOWNLOAD</button>
+        </form>
+        <br>
+    
+        <b>XCode 11.2 (7.2GB)</b>
+        <form method="get" action="https://developer.apple.com/download/more/" target="_blank">
+          <button type="submit">DOWNLOAD</button>
+        </form>
+        <br>
+    
+    
+        <b>iOS App Signer </b>
+        <form method="get" action="https://dantheman827.github.io/ios-app-signer/" target="_blank">
+          <button type="submit">DOWNLOAD</button>
+        </form>
+        <br>
+    
+        <b>VirtualBox (VM) </b>
+        <form method="get" action="https://www.virtualbox.org/wiki/Downloads" target="_blank">
+          <button type="submit">Download</button>
+        </form>
+      
+
+
+
+<font size=5px;>
+ <!--  <b>official site:</b> <a href="http://www.cydiaimpactor.com/" target="_blank">cydia impactor</a>
+-->
+<hr>
+<h3><font color="#f70040">faq:</font></h3>
+  <button class="accordion"><b>#</b></button>
+  		<div class="panel">
+   		 ?       
+  		</div>
+</font>
+
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        } 
+      });
+    }
+    </script>
+
+
+<div class="section mt-5">
+<div class="container">
+<div class="row">
+<div class="col-12">
+
+</div>
+</div>	
+</div>		
+</div>		
+
+
+</div>
+<div class="my-5 py-5">
+</div>
+</body>
+ 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'></script>
+<script  src="function.js"></script>
+ 
+</body>
+</html>

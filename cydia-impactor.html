@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>cydia impactor</title>
+  <link rel="icon" href="icon/ios.png" type="image/png" sizes="32x32">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=devanagari,latin-ext'>
+  <link rel="stylesheet" href="./style.css"> 
+<style>
+
+body{
+    font-family: 'Poppins', sans-serif;
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: 400;
+	color: #212112;
+	background-size:7%;
+	background-color: white !important;
+	overflow-x: hidden;
+	transition: all 200ms linear;
+
+}
+::selection {
+	color: #fff;
+	background-color: #ff4242;
+}
+::-moz-selection {
+	color: #fff;
+	background-color: #ff4242;
+}
+.start-header {
+	opacity: 1;
+	transform: translateY(0);
+	padding: 10px 0;
+	box-shadow: 0 10px 30px 0 rgb(33,33,33,0.15);
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.start-header.scroll-on {
+	box-shadow: 0 5px 10px 0 rgb(33,33,33,0.15);
+	padding: 5px 0;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.start-header.scroll-on .navbar-brand img{
+	height: 28px;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navigation-wrap{
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navbar{
+	padding: 0;
+}
+.navbar-brand img{
+	height: 52px;
+	width: auto;
+	display: block;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navbar-toggler {
+	float: right;
+	border: none;
+	padding-right: 0;
+}
+.navbar-toggler:active,
+.navbar-toggler:focus {
+	outline: none;
+}
+/*menu icon for phone color*/
+.navbar-light .navbar-toggler-icon {
+	width: 24px;
+	height: 17px;
+	background-image: none;
+	position: relative;
+	border-bottom: 1px solid white;
+    transition: all 300ms linear;
+}
+.navbar-light .navbar-toggler-icon:after, 
+.navbar-light .navbar-toggler-icon:before{
+	width: 24px;
+	position: absolute;
+	height: 1px;
+	background-color: white;
+	top: 0;
+	left: 0;
+	content: '';
+	z-index: 2;
+    transition: all 300ms linear;
+}
+.navbar-light .navbar-toggler-icon:after{
+	top: 8px;
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
+	transform: rotate(45deg);
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before {
+	transform: translateY(8px) rotate(-45deg);
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+	border-color: transparent;
+}
+/*navbar menu text color (ipa download, android etc*/
+.nav-link{
+	color: #fff !important;
+	font-weight: 400;
+    transition: all 200ms linear;
+}
+.nav-item:hover .nav-link{
+	color: #ff4242 !important;
+}
+/*navbar "home" menu hover color*/
+.nav-item.active .nav-link{
+	color: #ff4242 !important;
+}
+.nav-link {
+	position: relative;
+	padding: 5px 0 !important;
+	display: inline-block;
+}
+.nav-item:after{
+	position: absolute;
+	bottom: -5px;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	content: '';
+	background-color: #ff4242;
+	opacity: 0;
+    transition: all 200ms linear;
+}
+.nav-item:hover:after{
+	bottom: 0;
+	opacity: 1;
+}
+.nav-item.active:hover:after{
+	opacity: 0;
+}
+.nav-item{
+	position: relative;
+    transition: all 200ms linear;
+}
+/*navbar background color*/
+.bg-light {
+	background-color: #0E0E0E  !important;
+    transition: all 200ms linear;
+}
+.section {
+    position: relative;
+	width: 100%;
+	display: block;
+}
+.full-height {
+    height: 100vh;
+}
+.over-hide {
+    overflow: hidden;
+}
+.absolute-center {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100%;
+  margin-top: 40px;
+	transform: translateY(-50%);
+	z-index: 20;
+}
+/* announcement text*/
+h1 {
+	font-size: 48px;
+	line-height: 1.2;
+	font-weight: 700;
+	color: whitesmoke;
+	text-align: center;
+}
+p {
+	text-align: center;
+	margin: 0;
+	padding-top: 10px;
+	opacity: 1;
+	transform: translate(0);
+    transition: all 300ms linear;
+    transition-delay: 1700ms;
+}
+ 
+body.hero-anime p{
+	opacity: 0;
+	transform: translateY(40px);
+    transition-delay: 1700ms;
+}
+#switch,
+#circle {
+	cursor: pointer;
+	-webkit-transition: all 300ms linear;
+	transition: all 300ms linear; 
+} 
+#switch {
+	width: 60px;
+	height: 8px;
+	border: 2px solid #ff4242;
+	border-radius: 27px;
+	background: #ff4242;
+	position: relative;
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	opacity: 1;
+	transform: translate(0);
+    transition: all 300ms linear;
+    transition-delay: 1900ms;
+}
+body.hero-anime #switch{
+	opacity: 0;
+	transform: translateY(40px);
+    transition-delay: 1900ms;
+}
+#circle {
+	position: absolute;
+	top: -11px;
+	left: -13px;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	background: #000;
+}
+.switched {
+	border-color: #000 !important;
+	background: #ff4242 !important;
+}
+.switched #circle {
+	left: 43px;
+	box-shadow: 0 4px 4px rgba(26,53,71,0.25), 0 0 0 1px rgba(26,53,71,0.07);
+	background: #fff;
+}
+.nav-item .dropdown-menu {
+    transform: translate3d(0, 10px, 0);
+    visibility: hidden;
+    opacity: 0;
+	max-height: 0;
+    display: block;
+	padding: 0;
+	margin: 0;
+    transition: all 200ms linear;
+}
+.nav-item.show .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+	max-height: 999px;
+    transform: translate3d(0, 0px, 0);
+}
+/*drop down menu color background*/
+.dropdown-menu {
+	padding: 10px!important;
+	margin: 0;
+	font-size: 13px;
+	letter-spacing: 1px;
+	color: #212121;
+	background-color: #1f2029;
+	border: none;
+	border-radius: 3px;
+	box-shadow: 0 5px 10px 0 rgb(33,33,33,0.15);
+    transition: all 200ms linear;
+}
+.dropdown-toggle::after {
+	display: none;
+}
+ 
+.dropdown-item {
+	padding: 3px 15px;
+	color: #fff;
+	border-radius: 2px;
+    transition: all 200ms linear;
+}
+.dropdown-item:hover, 
+.dropdown-item:focus {
+	color: #fff;
+	background-color: rgb(255,66,66,0.6);
+}
+ 
+body.dark{
+	color: #fff;
+	background-color: #1f2029;
+}
+body.dark h1{
+	color: #fff;
+}
+body.dark h1 span{
+    transition-delay: 0ms !important;
+}
+body.dark p{
+	color: #fff;
+    transition-delay: 0ms !important;
+}
+body.dark .bg-light {
+	background-color: red !important;
+}
+body.dark .start-header {
+	box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
+}
+body.dark .start-header.scroll-on {
+	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
+}
+body.dark .nav-link{
+	color: #fff !important;
+}
+body.dark .nav-item.active .nav-link{
+	color: #999 !important;
+}
+body.dark .dropdown-menu {
+	color: #fff;
+	background-color: #1f2029;
+	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
+}
+body.dark .dropdown-item {
+	color: #fff;
+}
+body.dark .navbar-light .navbar-toggler-icon {
+	border-bottom: 1px solid #fff;
+}
+body.dark .navbar-light .navbar-toggler-icon:after, 
+body.dark .navbar-light .navbar-toggler-icon:before{
+	background-color: #fff;
+}
+body.dark .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+	border-color: transparent;
+}
+ 
+ 
+@media (max-width: 767px) { 
+	h1{
+		font-size: 38px;
+	}
+	.nav-item:after{
+		display: none;
+	}
+	.nav-item::before {
+		position: absolute;
+		display: block;
+		top: 15px;
+		left: 0;
+		width: 11px;
+		height: 1px;
+		content: "";
+		border: none;
+		background-color: white;
+		vertical-align: 0;
+	}
+	.dropdown-toggle::after {
+		position: absolute;
+		display: block;
+		top: 10px;
+		left: -23px;
+		width: 1px;
+		height: 11px;
+		content: "";
+		border: none;
+		background-color: white;
+		vertical-align: 0;
+		transition: all 200ms linear;
+	}
+	.dropdown-toggle[aria-expanded="true"]::after{
+		transform: rotate(90deg);
+		opacity: 0;
+	}
+	.dropdown-menu {
+		padding: 0 !important;
+		background-color: transparent;
+		box-shadow: none;
+		transition: all 200ms linear;
+	}
+	.dropdown-toggle[aria-expanded="true"] + .dropdown-menu {
+		margin-top: 10px !important;
+		margin-bottom: 20px !important;
+	}
+	body.dark .nav-item::before {
+		background-color: #fff;
+	}
+	body.dark .dropdown-toggle::after {
+		background-color: #fff;
+	}
+	body.dark .dropdown-menu {
+		background-color: transparent;
+		box-shadow: none;
+	}
+}
+
+/* accordion */
+.accordion {
+	background-color: #eee;
+	color: #1974d2;
+	cursor: pointer;
+	padding: 18px;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;  
+	transition: 0.4s;
+	font-family: 'Roboto Mono';font-size: 15px;			
+  }
+  
+  .active, .accordion:hover {
+	background-color: #ccc; 
+  }
+  
+  .panel {
+	padding: 0 18px;
+	display: none;
+	background-color: white;
+	overflow: hidden;
+	font-family: 'Roboto Mono';font-size: 14px;
+  }
+  
+  /* responsive img */
+  .responsive {
+	width: 100%;
+	height: auto;
+  }
+  
+  img {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 5px;
+	width: 200px;
+  }
+  
+  img:hover {
+	box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  }
+</style>
+</head>
+
+<body> 
+
+	<body class="hero-anime">	 
+	<div class="navigation-wrap bg-light start-header start-style">
+		<div class="container">
+		<div class="row">
+		<div class="col-12">
+		<nav class="navbar navbar-expand-md navbar-light">	
+		
+		
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+		</button>
+		
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav ml-auto py-4 py-md-0">
+			<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+				<a class="nav-link dropdown-toggle"  href="index.html" role="button" aria-haspopup="true" aria-expanded="false">home</a>
+			</li>
+		</ul>
+		</div>	
+		</nav>
+		</div>
+		</div>
+		</div>	
+	</div>
+
+	<body>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+<div style="padding-left:14px">
+
+<h2>Cydia Impactor</h2>
+<b>Cydia Impactor</b> is a gui tool for working with mobile devices. it is developed by saurik.
+<hr>
+<h3>note:</h3>
+  <ul>
+        <li>delete pokémon go app if previously installed via direct install (ota).<br></li>
+        <li>tou need to re-impact every 7 days.<br></li>
+        <li>revoke certificate first if you need to re-impact with in 7 days, like if there's a new update.<br></li>
+        <li>making a new user (administrator) on ur computer is recommended to avoid errors and do the impacting in there.<br></li>
+      </ul>
+
+      <h3>how to install:</h3>
+      <ol>
+            <li>make sure that you have the latest version of itunes installed on your computer.</li>         
+            <li>bemove the original app from your idevice.</li>           
+            <li>download the latest cydia impactor (link below).</li>                
+            <li>download the latest tweaked ipa file, then launch cydia impactor.</li>        
+            <li>connect your idevice to the computer using a usb data cable.</li>
+            <font color="red">
+            make sure to select <b>trust</b> if prompted on both computer and idevice. if everything goes fine, cydia impactor should detect your idevice.<br>
+            </font>
+
+            <a target="_blank" href="impactor/1.jpg">
+                <img src="impactor/1.jpg" alt="image" style="width:200px">
+              </a>
+              <br>
+              <font size="1"><b>click image to enlarge</b></font>
+              <br>
+            
+              <a target="_blank" href="impactor/impactor-trust.jpg">
+                <img src="impactor/impactor-trust.jpg" alt="image" style="width:200px">
+              </a>
+              <br>
+              <font size="1"><b>click image to enlarge</b></font>
+              <br>
+           
+              <li>drag and drop the downloaded ipa file onto it. or you can click <b>device> install package</b> to install the ipa.</li>
+              <a target="_blank" href="impactor/2.jpg">
+                <img src="impactor/2.jpg" alt="image" style="width:200px">
+              </a>
+              <br>
+			  <font size="1"><b>click image to enlarge</b></font>
+              <br>
+                      
+              <li>impactor will asks for your apple id username and password (guide on next step) which are used to fetch the developer certificate from the apple servers.</li>
+              <a target="_blank" href="impactor/3.jpg">
+                <img src="impactor/3.jpg" alt="image" style="width:200px">
+              </a>
+              <br>
+              <font size="1"><b>click image to enlarge</b></font>
+              <br>
+                
+              <li>this step is the most important</b>, now go to <a href="https://appleid.apple.com/#!&page=signin" target="_blank">https://appleid.apple.com/#!&page=signin</a> then log-in, scroll down to <b>Security> APP-SPECIFIC PASSWORDS</b> and generate one by choosing any label word, after that you will see a password like <b>XXXX-XXXX-XXXX</b> then copy this password. If ur two-factor authentication is disabled, use ur apple id password instead.</li>
+              <a target="_blank" href="impactor/4.jpg">
+                <img src="impactor/4.jpg" alt="image" style="width:200px">
+              </a>
+              <br>
+              <font size="1"><b>click image to enlarge</b></font>
+              <br>
+                    
+              <li>switch to cydia again and paste the generated app-specific password after you put your apple id username. <font color="red">keep your app-specific generated password so you don't need to generate again next time you impact. </font></li>
+               <a target="_blank" href="impactor/5.jpg">
+            <img src="impactor/5.jpg" alt="image" style="width:200px">
+          </a>
+          <br>
+          <font size="1"><b>click image to enlarge</b></font>
+          <br>
+       
+        <li>be patient and wait for impactor to perform all of the work. nnce you see the <b>"complete"</b> message on it, disconnect ur idevice from computer then unlock your idevice screen and go to <b>settings> general> device management</b>. tap the developer apple id and <b>trust</b> it. now you can launch the app!</li>
+        <a target="_blank" href="impactor/6.jpg">
+            <img src="impactor/6.jpg" alt="image" style="width:200px">
+          </a>
+          <br>
+          <font size="1"><b>click image to enlarge</b></font>
+          <br>             
+    </ol>             
+              
+    <br>
+
+<font size=5px;>
+   <b>official site:</b> <a href="http://www.cydiaimpactor.com/" target="_blank">cydia impactor</a>
+
+<hr>
+<h3><font color="#f70040">faq:</font></h3>
+  <button class="accordion"><b>#</b></button>
+  		<div class="panel">
+   		 ?       
+  		</div>
+</font>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section mt-5">
+<div class="container">
+<div class="row">
+<div class="col-12">
+
+</div>
+</div>	
+</div>		
+</div>		
+
+
+</div>
+<div class="my-5 py-5">
+</div>
+</body>
+ 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'></script>
+<script  src="function.js"></script>
+ 
+</body>
+</html>
